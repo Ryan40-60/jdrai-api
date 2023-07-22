@@ -1,0 +1,39 @@
+version: "3.1"
+
+services:
+  jdrai-api:
+    build: .
+    image: ${IMAGE_NAME}
+    container_name: jdrai-api
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - jdrai-db
+    volumes:
+      - ${LOGS_VOLUME}:/usr/src/node-app/logs
+    networks:
+      - jdrai-network
+    command: npm start
+
+  jdrai-db:
+    container_name: jdrai-db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - ${DB_PORT}:5432
+    volumes:
+      - jdrai-db:/var/lib/postgresql/data
+    networks:
+      - jdrai-network
+
+volumes:
+  jdrai-db:
+    name: jdrai-db
+
+networks:
+  jdrai-network:
+    driver: bridge

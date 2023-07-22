@@ -1,0 +1,15 @@
+# node modules
+node_modules
+
+# generated folders and files
+src/docs/*.yml
+logs/
+*.log
+.DS_Store
+.vscode
+
+# env file
+.env
+
+# other files
+.async_await

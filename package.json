@@ -1,0 +1,46 @@
+{
+  "name": "jdr-api",
+  "version": "0.5.0",
+  "description": "Backend application for JDR-AI project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "npm run prod:migrate && npm run prod:seed && npm run prod",
+    "prod": "cross-env NODE_ENV=production node src/index.js",
+    "prod:migrate": "cross-env NODE_ENV=production npx sequelize-cli db:migrate",
+    "prod:migrate:undo": "cross-env NODE_ENV=production npx sequelize-cli db:migrate:undo",
+    "prod:seed": "cross-env NODE_ENV=production npx sequelize-cli db:seed:all",
+    "dev": "npm run dev:migrate && npm run dev:seed && cross-env NODE_ENV=development npx nodemon --inspect src/index.js",
+    "dev:reset": "npm run dev:migrate:undo:all && npm run dev:migrate && npm run dev:seed",
+    "dev:create": "cross-env NODE_ENV=development npx sequelize-cli db:create",
+    "dev:migrate": "cross-env NODE_ENV=development npx sequelize-cli db:migrate",
+    "dev:migrate:undo": "cross-env NODE_ENV=development npx sequelize-cli db:migrate:undo",
+    "dev:migrate:undo:all": "cross-env NODE_ENV=development npx sequelize-cli db:migrate:undo:all",
+    "dev:seed": "cross-env NODE_ENV=development npx sequelize-cli db:seed:all",
+    "dev:seed:undo": "cross-env NODE_ENV=development npx sequelize-cli db:seed:undo:all"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.8.0",
+    "fs": "^0.0.1-security",
+    "http-status": "^1.6.2",
+    "joi": "^17.9.2",
+    "moment": "^2.29.4",
+    "morgan": "^1.10.0",
+    "pg": "^8.11.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.32.1",
+    "winston": "^3.10.0",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "postman-to-openapi": "^3.0.1",
+    "swagger-ui-express": "^5.0.0"
+  }
+}
