@@ -40,6 +40,7 @@ const User = sequelize.define(
   },
   {
     timestamps: true,
+    paranoid: true,
   }
 );
 
@@ -89,4 +90,4 @@ User.prototype.toJSON = function () {
   return values;
 };
 
-module.exports = User;
+export default User;
