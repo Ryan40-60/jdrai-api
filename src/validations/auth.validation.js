@@ -15,6 +15,16 @@ const register = {
   }),
 };
 
-const authValidation = { register };
+/**
+ * @description: Schema for the "login" request
+ */
+const login = {
+  body: Joi.object().keys({
+    log: Joi.string().required(),
+    password: Joi.string().required(),
+  }),
+};
+
+const authValidation = { register, login };
 
 export default authValidation;
