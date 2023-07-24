@@ -1,5 +1,7 @@
 import Joi from "joi";
 
+import { validateUUID } from "./custom.validation.js";
+
 /**
  * @description: Joi Schemas for authentication-related requests.
  */
@@ -10,7 +12,7 @@ import Joi from "joi";
 const register = {
   body: Joi.object().keys({
     username: Joi.string().required(),
-    mail: Joi.string().required(),
+    mail: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
 };

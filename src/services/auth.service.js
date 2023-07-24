@@ -1,4 +1,7 @@
+import httpStatus from "http-status";
+
 import dbService from "./db.service.js";
+import ApiError from "../class/ApiError.js";
 import User from "../database/models/user.model.js";
 
 /**
@@ -70,13 +73,13 @@ const login = async (usernameOrEmail, password) => {
 
     // If user still not found, throw an error
     if (!user) {
-      throw new Error("User not found");
+      throw new ApiError(httpStatus.NOT_FOUND, "User not found");
     }
 
     // If provided password doesn't match the user's actual password, throw an error
     const isPasswordCorrect = await user.validatePassword(password);
     if (!isPasswordCorrect) {
-      throw new Error("Password incorrect");
+      throw new ApiError(httpStatus.UNAUTHORIZED, "Password incorrect");
     }
 
     return [user, null];

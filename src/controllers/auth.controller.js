@@ -1,7 +1,14 @@
 import httpStatus from "http-status";
+
 import ApiError from "../class/ApiError.js";
+
 import catchAsync from "../utils/catchAsync.js";
+
 import authService from "../services/auth.service.js";
+import tokenService from "../services/token.service.js";
+import dbService from "../services/db.service.js";
+
+import Token from "../database/models/token.model.js";
 
 /**
  * @description: Controller function for user registration.
@@ -26,14 +33,28 @@ const register = catchAsync(async (req, res) => {
   }
 
   // Attempt to register the user using the authentication service
-  const [user, error] = await authService.register(username, mail, password);
+  const [user, userError] = await authService.register(
+    username,
+    mail,
+    password
+  );
 
-  // If there was an error during registration, throw an internal server error
-  if (error) {
-    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error);
+  // If there was an error during registration, throw the error
+  if (userError) {
+    throw userError;
   }
 
-  // If registration is successful, send the user data in the response
+  // Generate authentication tokens for the authenticated user using the token service
+  const [tokens, tokenError] = await tokenService.generateAuthTokens(user);
+
+  // If there was an error during tokens generation, throw the error
+  if (tokenError) {
+    throw tokenError;
+  }
+
+  user.dataValues.tokens = tokens;
+
+  // Send the user data in the response
   res.send(user);
 });
 
@@ -55,17 +76,44 @@ const login = catchAsync(async (req, res) => {
     );
   }
 
-  // Attempt login using the provided username
-  const [user, error] = await authService.login(usernameOrEmail, password);
+  // Attempt login using the provided log information
+  const [user, userError] = await authService.login(usernameOrEmail, password);
 
-  // If there was an error during login, throw an internal server error
-  if (error) {
-    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error);
+  // If there was an error during login, throw the error
+  if (userError) {
+    throw userError;
   }
+
+  // Generate authentication tokens for the authenticated user using the token service
+  const [tokens, tokenError] = await tokenService.generateAuthTokens(user);
+
+  // If there was an error during tokens generation, throw the error
+  if (tokenError) {
+    throw tokenError;
+  }
+
+  user.dataValues.tokens = tokens;
 
   // Send the user data in the response
   res.send(user);
 });
 
-const authController = { register, login };
+/**
+ * @description : Controller function for user logout. Deletes the user's refresh token from the database.
+ *
+ * @param {Object} req - Object representing the request sent to the server.
+ * @param {Object} res - Object representing the response to be sent to the client.
+ */
+const logout = catchAsync(async (req, res) => {
+  // Retrieve the user's ID from the request
+  const userId = req.user.id;
+
+  // Delete the user's authentication tokens from the database
+  await dbService.destroy(Token, { user_id: userId });
+
+  // Send a response indicating successful logout
+  res.send({ message: "Logout successful" });
+});
+
+const authController = { register, login, logout };
 export default authController;
