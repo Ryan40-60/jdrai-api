@@ -43,7 +43,9 @@ const envSchema = Joi.object()
     JWT_REFRESH_EXPIRE_DAYS: Joi.string().default(1),
 
     // Documentation Configuration
-    POSTMAN_FILE: Joi.string().default("src/docs/api.postman_collection.json"),
+    POSTMAN_FILE: Joi.string().default(
+      "src/docs/jdrai-api.postman_collection.json"
+    ),
     SWAGGER_FILE: Joi.string().default("src/docs/swagger.yml"),
 
     // Logs Configuration
