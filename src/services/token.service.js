@@ -37,7 +37,7 @@ const generateToken = (userId, expires, secret = envConfig.jwt.secret) => {
 const deleteRefreshToken = async (userId) => {
   // Check if a refresh token is assigned to the user
   const tokenUser = await dbService.findOne(Token, {
-    user_id: userId,
+    id_user: userId,
     type: tokens.REFRESH,
   });
 
@@ -97,7 +97,7 @@ const generateAuthTokens = async (user) => {
     // Save the refreshToken in the database
     await dbService.create(Token, {
       token: refreshToken,
-      user_id: user.id,
+      id_user: user.id,
       type: tokens.REFRESH,
       expires: refreshTokenExpires,
       blacklisted: false,

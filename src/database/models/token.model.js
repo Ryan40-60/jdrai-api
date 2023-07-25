@@ -6,7 +6,7 @@ import { tokens } from "../../config/enum.config.js";
 import User from "./user.model.js";
 
 /**
- * @description Token Model representing the "tokens" table.
+ * @description Model for the 'Token' table
  *
  * @type {class} Token
  */
@@ -45,6 +45,6 @@ const Token = sequelize.define(
 );
 
 // Foreign key associations with corresponding tables
-User.hasMany(Token, { foreignKey: "user_id" });
+User.hasMany(Token, { foreignKey: "id_user" });
 
 export default Token;

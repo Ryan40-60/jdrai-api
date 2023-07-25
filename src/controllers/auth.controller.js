@@ -109,7 +109,7 @@ const logout = catchAsync(async (req, res) => {
   const userId = req.user.id;
 
   // Delete the user's authentication tokens from the database
-  await dbService.destroy(Token, { user_id: userId });
+  await dbService.destroy(Token, { id_user: userId });
 
   // Send a response indicating successful logout
   res.send({ message: "Logout successful" });
