@@ -3,7 +3,7 @@ version: "3.1"
 services:
   jdrai-api:
     build: .
-    image: ${IMAGE_NAME}
+    image: jdrai-api
     container_name: jdrai-api
     ports:
       - ${PORT}:${PORT}
