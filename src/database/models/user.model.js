@@ -50,7 +50,7 @@ const User = sequelize.define(
  * @param {*} user : Object containing the user whose password needs to be hashed
  * @returns : The user object with the hashed password
  */
-const hashPassword = async (user) => {
+const hashPassword = async (user, options) => {
   // If the password is not defined, return the object as it is
   if (!user.password) {
     return user;
@@ -68,6 +68,11 @@ const hashPassword = async (user) => {
 
 // Model hooks for User
 User.addHook("beforeCreate", hashPassword);
+User.addHook(
+  "beforeBulkCreate",
+  async (users, options) =>
+    await Promise.all(users.map((e) => hashPassword(e, options)))
+);
 
 /**
  * @description : Validates if the provided password matches the user's password
