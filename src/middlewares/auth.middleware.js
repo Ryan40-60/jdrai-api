@@ -11,7 +11,7 @@ import { roles } from "../config/enum.config.js";
  * @params {boolean} needAdmin - check if the user is admin if true
  * @returns A middleware that authenticates the user
  */
-const auth = (needAdmin) => {
+const auth = (admin) => {
   return async (req, res, next) => {
     // Create a promise to handle the success or failure of authentication
     new Promise((resolve, reject) => {
@@ -29,7 +29,7 @@ const auth = (needAdmin) => {
         req.user = user;
 
         // Check if the user is an admin if necessary
-        if (needAdmin && user.role !== roles.ADMIN) {
+        if (admin && user.role !== roles.ADMIN) {
           // Reject the promise with a 403 error
           return reject(new ApiError(httpStatus.FORBIDDEN, "Unauthorized"));
         }

@@ -1,6 +1,8 @@
 import dbService from "./db.service.js";
 
 import User from "../database/models/user.model.js";
+import ApiError from "../class/ApiError.js";
+import httpStatus from "http-status";
 
 /**
  * @description:
@@ -31,6 +33,9 @@ const listUsers = async () => {
 const getUserById = async (userId) => {
   try {
     const user = await dbService.findByPk(User, userId);
+    if (!user) {
+      throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+    }
     return [user, null];
   } catch (error) {
     // Error occurred during

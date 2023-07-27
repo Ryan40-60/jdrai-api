@@ -14,7 +14,8 @@ router.get("/", auth(true), userController.listUsers);
 // Get authenticated user route
 router.get("/me", auth(), userController.getAuthenticatedUser);
 
-// Get user route
+// Route to get a specific user by ID.
+// Requires admin privileges to access (auth middleware with `admin` flag set to true).
 router.get(
   "/:id",
   auth(true),
