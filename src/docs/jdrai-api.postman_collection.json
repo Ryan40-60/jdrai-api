@@ -4,7 +4,7 @@
 		"name": "jdrai-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23371572",
-		"_collection_link": "https://restless-shadow-285084.postman.co/workspace/b377aab5-7232-470b-8195-ce1a3617269e/collection/23371572-845c0a44-b757-423e-8bb1-f349c758cd45?action=share&creator=23371572&source=collection_link"
+		"_collection_link": "https://restless-shadow-285084.postman.co/workspace/jdrai~b377aab5-7232-470b-8195-ce1a3617269e/collection/23371572-845c0a44-b757-423e-8bb1-f349c758cd45?action=share&creator=23371572&source=collection_link"
 	},
 	"item": [
 		{
@@ -17,7 +17,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									""
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.collectionVariables.set(\"accessToken\", jsonData.tokens.access.token);\r",
+									"pm.collectionVariables.set(\"refreshToken\", jsonData.tokens.access.token);"
 								],
 								"type": "text/javascript"
 							}
@@ -28,7 +31,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"\",\r\n    \"mail\": \"\",\r\n    \"password\": \"\"\r\n}",
+							"raw": "{\r\n    \"username\": \"user\",\r\n    \"mail\": \"user@gmail.com\",\r\n    \"password\": \"user\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -51,12 +54,26 @@
 				},
 				{
 					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.collectionVariables.set(\"accessToken\", jsonData.tokens.access.token);\r",
+									"pm.collectionVariables.set(\"refreshToken\", jsonData.tokens.access.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"log\": \"\",\r\n    \"password\": \"\"\r\n}",
+							"raw": "{\r\n    \"log\": \"user\",\r\n    \"password\": \"user\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -73,6 +90,72 @@
 								"login"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjNlNzBkYS00YjUwLTRiMzEtOGFlYS0yMDVjYTc1MWY1NjMiLCJpYXQiOjE2OTAyMzExMDEsImV4cCI6MTY5MDIzODMwMX0.qD1cXbWEHmI4k3MJ0WX4I3a9Q5fkbq6g6LD2Lek2qHE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "list_users",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get_user",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get_authenticated_user",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
@@ -118,6 +201,15 @@
 		{
 			"key": "url",
 			"value": "localhost:3000"
+		},
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "refreshToken",
+			"value": ""
 		}
 	]
 }
