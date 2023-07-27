@@ -39,7 +39,7 @@ const envSchema = Joi.object()
 
     // JWT Configuration
     JWT_SECRET: Joi.string().required(),
-    JWT_ACCESS_EXPIRE_MINUTES: Joi.string().default(30),
+    JWT_ACCESS_EXPIRE_MINUTES: Joi.string().default(120),
     JWT_REFRESH_EXPIRE_DAYS: Joi.string().default(1),
 
     // Documentation Configuration
