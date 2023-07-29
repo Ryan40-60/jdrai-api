@@ -32,9 +32,9 @@ const isMailAvailable = async (mail) => {
  * @param {string} username - The username of the new user.
  * @param {string} mail - The email of the new user.
  * @param {string} password - The password of the new user.
- * @returns {Array} - Returns an array containing the newly registered user and an error (if any).
- *                    The user will be null if there was an error during registration.
- *                    The error will be null if registration was successful.
+ * @returns {Promise<[Array<User> | null, Error | null]>} Returns an array containing the newly registered user and an error (if any).
+ *                                                        The user will be null if there was an error during registration.
+ *                                                        The error will be null if registration was successful.
  */
 const register = async (username, mail, password) => {
   const data = { username, mail, password };
@@ -53,9 +53,9 @@ const register = async (username, mail, password) => {
  *
  * @param {string} usernameOrEmail - Either the username or the email of the user.
  * @param {string} password - The password of the user.
- * @returns {Array} - Returns an array containing the authenticated user and an error (if any).
- *                    The user will be null if authentication fails.
- *                    The error will be null if authentication is successful.
+ * @returns {Promise<[Array<User> | null, Error | null]>} Returns an array containing the authenticated user and an error (if any).
+ *                                                        The user will be null if authentication fails.
+ *                                                        The error will be null if authentication is successful.
  */
 const login = async (usernameOrEmail, password) => {
   try {

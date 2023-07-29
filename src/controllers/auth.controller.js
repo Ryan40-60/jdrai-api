@@ -14,7 +14,7 @@ import Token from "../database/models/token.model.js";
  * @param {Object} req - Object representing the request sent to the server.
  * @param {Object} res - Object representing the response to be sent to the client.
  */
-const register = catchAsync(async (req, res) => {
+export const register = catchAsync(async (req, res) => {
   // Extract the necessary data from the request body
   const { username, mail, password } = req.body;
 
@@ -50,6 +50,7 @@ const register = catchAsync(async (req, res) => {
     throw tokenError;
   }
 
+  // Add authentication tokens to the registered user
   user.dataValues.tokens = tokens;
 
   // Send the user data in the response
@@ -62,7 +63,7 @@ const register = catchAsync(async (req, res) => {
  * @param {Object} req - Object representing the request sent to the server.
  * @param {Object} res - Object representing the response to be sent to the client.
  */
-const login = catchAsync(async (req, res) => {
+export const login = catchAsync(async (req, res) => {
   // Extract the necessary data from the request body
   const { log: usernameOrEmail, password } = req.body;
 
@@ -90,6 +91,7 @@ const login = catchAsync(async (req, res) => {
     throw tokenError;
   }
 
+  // Add authentication tokens to the logged user
   user.dataValues.tokens = tokens;
 
   // Send the user data in the response
@@ -97,12 +99,13 @@ const login = catchAsync(async (req, res) => {
 });
 
 /**
- * @description : Controller function for user logout. Deletes the user's refresh token from the database.
+ * @description : Controller function for user logout.
+ *                Deletes the user's refresh token from the database.
  *
  * @param {Object} req - Object representing the request sent to the server.
  * @param {Object} res - Object representing the response to be sent to the client.
  */
-const logout = catchAsync(async (req, res) => {
+export const logout = catchAsync(async (req, res) => {
   // Retrieve the user's ID from the request
   const userId = req.user.id;
 
@@ -112,6 +115,3 @@ const logout = catchAsync(async (req, res) => {
   // Send a response indicating successful logout
   res.send({ message: "Logout successful" });
 });
-
-const authController = { register, login, logout };
-export default authController;

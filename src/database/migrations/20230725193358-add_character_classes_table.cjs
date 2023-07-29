@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("classes", {
+    await queryInterface.createTable("character_classes", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -14,7 +14,7 @@ module.exports = {
         allowNull: false,
         trim: true,
       },
-      force: {
+      strength: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -26,7 +26,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      chance: {
+      luck: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -34,6 +34,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("classes");
+    await queryInterface.dropTable("character_classes");
   },
 };

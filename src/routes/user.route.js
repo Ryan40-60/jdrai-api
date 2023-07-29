@@ -4,23 +4,23 @@ import validate from "../middlewares/validate.middleware.js";
 import auth from "../middlewares/auth.middleware.js";
 
 import userValidation from "../validations/user.validation.js";
-import userController from "../controllers/user.controller.js";
+import {
+  getAuthenticatedUser,
+  listUsers,
+  getUser,
+} from "../controllers/user.controller.js";
 
 const router = express.Router();
 
-// List users route
-router.get("/", auth(true), userController.listUsers);
-
 // Get authenticated user route
-router.get("/me", auth(), userController.getAuthenticatedUser);
+router.get("/me", auth(), getAuthenticatedUser);
 
-// Route to get a specific user by ID.
-// Requires admin privileges to access (auth middleware with `admin` flag set to true).
-router.get(
-  "/:id",
-  auth(true),
-  validate(userValidation.getUser),
-  userController.getUser
-);
+// List users route
+// Requires admin role to access (auth middleware with `admin` flag set to true).
+router.get("/", auth(true), listUsers);
+
+// Get user route
+// Requires admin role to access (auth middleware with `admin` flag set to true).
+router.get("/:id", auth(true), validate(userValidation.getUser), getUser);
 
 export default router;

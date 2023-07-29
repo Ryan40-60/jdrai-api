@@ -13,6 +13,7 @@ const sequelize = new Sequelize(databaseUrl, {
   logging: false,
   define: {
     freezeTableName: true,
+    timestamps: false,
   },
 });
 

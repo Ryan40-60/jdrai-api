@@ -18,11 +18,11 @@ module.exports = {
           key: "id",
         },
       },
-      id_class: {
+      id_characterClass: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "classes",
+          model: "character_classes",
           key: "id",
         },
       },
@@ -30,6 +30,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         trim: true,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
       },
     });
   },

@@ -7,7 +7,7 @@ import userService from "../services/user.service.js";
  * @param {Object} req - Object representing the request sent to the server.
  * @param {Object} res - Object representing the response to be sent to the client.
  */
-const listUsers = catchAsync(async (req, res) => {
+export const listUsers = catchAsync(async (req, res) => {
   // Attempt to retrieve the list of users
   const [users, userError] = await userService.listUsers();
 
@@ -26,7 +26,7 @@ const listUsers = catchAsync(async (req, res) => {
  * @param {Object} req - Object representing the request sent to the server.
  * @param {Object} res - Object representing the response to be sent to the client.
  */
-const getUser = catchAsync(async (req, res) => {
+export const getUser = catchAsync(async (req, res) => {
   // Extract the necessary data from the request
   const { id: userId } = req.params;
 
@@ -48,7 +48,7 @@ const getUser = catchAsync(async (req, res) => {
  * @param {Object} req - Object representing the request sent to the server.
  * @param {Object} res - Object representing the response to be sent to the client.
  */
-const getAuthenticatedUser = catchAsync(async (req, res) => {
+export const getAuthenticatedUser = catchAsync(async (req, res) => {
   // Extract the necessary data from the request
   const { id: userId } = req.user;
 
@@ -63,6 +63,3 @@ const getAuthenticatedUser = catchAsync(async (req, res) => {
   // Send the user data in the response
   res.send(user);
 });
-
-const userController = { getUser, listUsers, getAuthenticatedUser };
-export default userController;
