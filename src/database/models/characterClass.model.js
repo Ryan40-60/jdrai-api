@@ -3,11 +3,11 @@ import { DataTypes } from "sequelize";
 import sequelize from "../../config/db.config.js";
 
 /**
- * @description Model for the 'Class' table
+ * @description Model for the 'CharacterClass' table
  *
- * @type {class} Class
+ * @type {class} CharacterClass
  */
-const Class = sequelize.define("classes", {
+const CharacterClass = sequelize.define("character_classes", {
   id: {
     type: DataTypes.INTEGER,
     defaultValue: DataTypes.UUIDV4,
@@ -19,7 +19,7 @@ const Class = sequelize.define("classes", {
     allowNull: false,
     trim: true,
   },
-  force: {
+  strength: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
@@ -31,10 +31,10 @@ const Class = sequelize.define("classes", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  chance: {
+  luck: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
 });
 
-export default Class;
+export default CharacterClass;
