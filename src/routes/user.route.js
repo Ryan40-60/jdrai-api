@@ -8,6 +8,8 @@ import {
   getAuthenticatedUser,
   listUsers,
   getUser,
+  updateAuthenticatedUser,
+  updateUser,
 } from "../controllers/user.controller.js";
 
 const router = express.Router();
@@ -22,5 +24,22 @@ router.get("/", auth(true), listUsers);
 // Get user route
 // Requires admin role to access (auth middleware with `admin` flag set to true).
 router.get("/:id", auth(true), validate(userValidation.getUser), getUser);
+
+// Update authenticated user route
+router.patch(
+  "/me",
+  auth(),
+  validate(userValidation.updateAuthenticatedUser),
+  updateAuthenticatedUser
+);
+
+// Update user route
+// Requires admin role to access (auth middleware with `admin` flag set to true).
+router.patch(
+  "/:id",
+  auth(true),
+  validate(userValidation.updateUser),
+  updateUser
+);
 
 export default router;

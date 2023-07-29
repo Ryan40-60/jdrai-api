@@ -68,6 +68,7 @@ const hashPassword = async (user, options) => {
 
 // Model hooks for User
 User.addHook("beforeCreate", hashPassword);
+User.addHook("beforeUpdate", hashPassword);
 User.addHook(
   "beforeBulkCreate",
   async (users, options) =>

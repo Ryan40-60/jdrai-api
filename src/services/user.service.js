@@ -5,7 +5,7 @@ import ApiError from "../class/ApiError.js";
 import httpStatus from "http-status";
 
 /**
- * @description Retrieves a list of all users from the database.
+ * @description: Retrieves a list of all users from the database.
  *
  * @returns {Promise<[User[] | null, Error | null]>} An array containing the list of users and an error (if any).
  *                                                  The user array will be null if there was an error fetching the users.
@@ -23,7 +23,7 @@ const listUsers = async () => {
 };
 
 /**
- * @description Retrieves a user from the database by its ID.
+ * @description: Retrieves a user from the database by its ID.
  *
  * @param {string} userId - The ID of the user to retrieve.
  * @returns {Promise<[User | null, ApiError | null]>} An array containing the user object and an error (if any).
@@ -48,7 +48,36 @@ const getUserById = async (userId) => {
   }
 };
 
+/**
+ * @description: Updates a user from the database by its ID.
+ *
+ * @param {string} userId - The ID of the user to update.
+ * @param {string} username - The updated username for the user.
+ * @param {string} mail - The updated email for the user.
+ * @param {string} password - The updated password for the user.
+ * @returns {Promise<[User | null, ApiError | null]>} An array containing the updated user object and an error (if any).
+ *                                                  The user will be null if the user with the given ID was not found.
+ *                                                  The error will be null if the operation was successful.
+ */
+const updateUser = async (userId, username, mail, password) => {
+  const data = {
+    username: username,
+    mail: mail,
+    password: password,
+  };
+  try {
+    // Update the user with the provided data
+    const [updatedUser] = await dbService.update(User, { id: userId }, data);
+
+    return [updatedUser, null];
+  } catch (error) {
+    // An error occurred during the database operation
+    return [null, error];
+  }
+};
+
 export default {
   getUserById,
   listUsers,
+  updateUser,
 };

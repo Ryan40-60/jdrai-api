@@ -15,7 +15,7 @@ import Token from "../database/models/token.model.js";
  * @param {Object} res - Object representing the response to be sent to the client.
  */
 export const register = catchAsync(async (req, res) => {
-  // Extract the necessary data from the request body
+  // Extract the necessary data from the request
   const { username, mail, password } = req.body;
 
   // Check if the provided username is available
@@ -64,10 +64,10 @@ export const register = catchAsync(async (req, res) => {
  * @param {Object} res - Object representing the response to be sent to the client.
  */
 export const login = catchAsync(async (req, res) => {
-  // Extract the necessary data from the request body
+  // Extract the necessary data from the request
   const { log: usernameOrEmail, password } = req.body;
 
-  // Neither username nor email provided in the request
+  // Check if username/email and password are provided in the request
   if (!usernameOrEmail || !password) {
     throw new ApiError(
       httpStatus.BAD_REQUEST,
