@@ -1,9 +1,7 @@
 import httpStatus from "http-status";
 
 import ApiError from "../class/ApiError.js";
-
 import catchAsync from "../utils/catchAsync.js";
-
 import authService from "../services/auth.service.js";
 import tokenService from "../services/token.service.js";
 import dbService from "../services/db.service.js";

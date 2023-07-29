@@ -1,7 +1,9 @@
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
-import User from "../database/models/user.model.js";
-import dbService from "../services/db.service.js";
+
 import envConfig from "./env.config.js";
+import dbService from "../services/db.service.js";
+
+import User from "../database/models/user.model.js";
 
 // Options for the JWT strategy
 const jwtOptions = {

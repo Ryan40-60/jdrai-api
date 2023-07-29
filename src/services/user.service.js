@@ -5,30 +5,30 @@ import ApiError from "../class/ApiError.js";
 import httpStatus from "http-status";
 
 /**
- * @description:
+ * @description Retrieves a list of all users from the database.
  *
- * @param {string} userId -
- * @returns {Array} - Returns an array containing the list of users and an error (if any).
- *                    The user will be null if there was an error during registration.
- *                    The error will be null if registration was successful.
+ * @returns {Promise<[Array<User> | null, Error | null]>} An array containing the list of users and an error (if any).
+ *                The user array will be null if there was an error fetching the users.
+ *                The error will be null if the operation was successful.
  */
 const listUsers = async () => {
   try {
     const users = await dbService.findAll(User);
     return [users, null];
   } catch (error) {
-    // Error occurred during
+    // Error occurred during database operation
     return [null, error];
   }
 };
 
 /**
- * @description:
+ * @description Retrieves a user from the database by its ID.
  *
- * @param {string} userId -
- * @returns {Array} - Returns an array containing the newly registered user and an error (if any).
- *                    The user will be null if there was an error during registration.
- *                    The error will be null if registration was successful.
+ * @param {string} userId - The ID of the user to retrieve.
+ * @returns {Promise<[User | null, ApiError | null]>} An array containing the user object and an error (if any).
+ *                The user will be null if the user with the given ID was not found.
+ *                The error will be null if the operation was successful.
+ *                If the user is not found, an ApiError with 404 status and a "User not found" message will be thrown.
  */
 const getUserById = async (userId) => {
   try {
@@ -38,7 +38,7 @@ const getUserById = async (userId) => {
     }
     return [user, null];
   } catch (error) {
-    // Error occurred during
+    // Error occurred during database operation or user not found
     return [null, error];
   }
 };

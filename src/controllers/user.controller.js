@@ -1,26 +1,17 @@
-import httpStatus from "http-status";
-
-import ApiError from "../class/ApiError.js";
-
 import catchAsync from "../utils/catchAsync.js";
-
 import userService from "../services/user.service.js";
-import tokenService from "../services/token.service.js";
-import dbService from "../services/db.service.js";
-
-import Token from "../database/models/token.model.js";
 
 /**
- * @description:
+ * @description: Controller function for listing all users.
  *
  * @param {Object} req - Object representing the request sent to the server.
  * @param {Object} res - Object representing the response to be sent to the client.
  */
 const listUsers = catchAsync(async (req, res) => {
-  // Attempt to retrieve the user
+  // Attempt to retrieve the list of users
   const [users, userError] = await userService.listUsers();
 
-  // If there was an error during fetch, throw the error
+  // If there was an error during fetching, throw the error
   if (userError) {
     throw userError;
   }
@@ -30,7 +21,7 @@ const listUsers = catchAsync(async (req, res) => {
 });
 
 /**
- * @description: Controller function for retrieving user information.
+ * @description: Controller function for retrieving user information by ID.
  *
  * @param {Object} req - Object representing the request sent to the server.
  * @param {Object} res - Object representing the response to be sent to the client.
@@ -42,7 +33,7 @@ const getUser = catchAsync(async (req, res) => {
   // Attempt to retrieve the user
   const [user, userError] = await userService.getUserById(userId);
 
-  // If there was an error during fetch, throw the error
+  // If there was an error during fetching, throw the error
   if (userError) {
     throw userError;
   }
@@ -52,7 +43,7 @@ const getUser = catchAsync(async (req, res) => {
 });
 
 /**
- * @description: Controller function for retrieving user information.
+ * @description: Controller function for retrieving authenticated user information.
  *
  * @param {Object} req - Object representing the request sent to the server.
  * @param {Object} res - Object representing the response to be sent to the client.
@@ -64,7 +55,7 @@ const getAuthenticatedUser = catchAsync(async (req, res) => {
   // Attempt to retrieve the user
   const [user, userError] = await userService.getUserById(userId);
 
-  // If there was an error during fetch, throw the error
+  // If there was an error during fetching, throw the error
   if (userError) {
     throw userError;
   }
