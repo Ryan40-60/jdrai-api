@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("games", {
+    await queryInterface.createTable("characters", {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -18,18 +18,23 @@ module.exports = {
           key: "id",
         },
       },
-      id_milestone: {
+      id_class: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "milestones",
+          model: "classes",
           key: "id",
         },
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        trim: true,
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("games");
+    await queryInterface.dropTable("characters");
   },
 };
