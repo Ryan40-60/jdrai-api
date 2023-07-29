@@ -6,6 +6,8 @@ import envConfig from "../config/env.config.js";
 import authRoutes from "./auth.route.js";
 // Import users routes
 import userRoutes from "./user.route.js";
+// Import characters routes
+import characterRoutes from "./character.route.js";
 // Import documentation routes
 import docsRoutes from "./docs.route.js";
 
@@ -15,6 +17,8 @@ const router = express.Router();
 router.use("/auth", authRoutes);
 // Use authentication routes
 router.use("/user", userRoutes);
+// Use authentication routes
+router.use("/character", characterRoutes);
 
 // If the environment is not in production, use documentation routes
 if (envConfig.env !== "production") {
