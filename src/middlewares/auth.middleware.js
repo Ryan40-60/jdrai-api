@@ -31,7 +31,7 @@ const auth = (admin) => {
         // Check if the user is an admin if necessary
         if (admin && user.role !== roles.ADMIN) {
           // Reject the promise with a 403 error
-          return reject(new ApiError(httpStatus.FORBIDDEN, "Unauthorized"));
+          return reject(new ApiError(httpStatus.FORBIDDEN, "Forbidden"));
         }
 
         // Finally, resolve the promise
