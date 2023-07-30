@@ -44,7 +44,7 @@ const getUserById = async (userId) => {
 
     return [user, null];
   } catch (error) {
-    // Error occurred during the database operation or user not found
+    // Error occurred during the database operation
     return [null, error];
   }
 };

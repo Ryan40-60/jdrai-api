@@ -2,9 +2,10 @@ import httpStatus from "http-status";
 
 import ApiError from "../class/ApiError.js";
 import catchAsync from "../utils/catchAsync.js";
-import authService from "../services/auth.service.js";
-import tokenService from "../services/token.service.js";
 import dbService from "../services/db.service.js";
+import authService from "../services/auth.service.js";
+import userService from "../services/user.service.js";
+import tokenService from "../services/token.service.js";
 
 import Token from "../database/models/token.model.js";
 
@@ -114,4 +115,45 @@ export const logout = catchAsync(async (req, res) => {
 
   // Send a response indicating successful logout
   res.send({ message: "Logout successful" });
+});
+
+/**
+ * @description Controller function for refreshing authentication tokens using a refresh token.
+ *
+ * @param {Object} req - Object representing the request sent to the server.
+ * @param {Object} res - Object representing the response to be sent to the client.
+ */
+export const refreshTokens = catchAsync(async (req, res) => {
+  // Retrieve the refresh token from the request
+  const { refreshToken } = req.body;
+
+  // Attempt to verify the provided refresh token
+  const [token, tokenError] = await tokenService.verifyToken(refreshToken);
+
+  // If there was an error during tokens verification, throw the error
+  if (tokenError) {
+    throw tokenError;
+  }
+
+  // Attempt to retrieve the user associated with the refresh token
+  const [user, userError] = await userService.getUserById(token.id_user);
+
+  // If there was an error during fetch, throw the error
+  if (userError) {
+    throw userError;
+  }
+
+  // Delete the used refresh token from the database to prevent reuse
+  await tokenService.deleteRefreshToken(user.id);
+
+  // Attempt to generate new authentication tokens for the authenticated user
+  const [tokens, tokenError2] = await tokenService.generateAuthTokens(user);
+
+  // If there was an error during tokens generation, throw the error
+  if (tokenError2) {
+    throw tokenError2;
+  }
+
+  // Send the new tokens in the response
+  res.send({ ...tokens });
 });

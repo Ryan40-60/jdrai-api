@@ -25,6 +25,15 @@ const login = {
   }),
 };
 
-const authValidation = { register, login };
+/**
+ * @description: Schema for the "refreshTokens" request
+ */
+const refreshTokens = {
+  body: Joi.object().keys({
+    refreshToken: Joi.string().required(),
+  }),
+};
+
+const authValidation = { register, login, refreshTokens };
 
 export default authValidation;

@@ -3,7 +3,6 @@ import moment from "moment";
 import httpStatus from "http-status";
 
 import ApiError from "../class/ApiError.js";
-
 import envConfig from "../config/env.config.js";
 import { tokens } from "../config/enum.config.js";
 import dbService from "./db.service.js";
@@ -48,26 +47,34 @@ const deleteRefreshToken = async (userId) => {
 };
 
 /**
- * @description : Decrypts the jwt and returns the Token from the database.
+ * @description Decrypts the JWT and retrieves the corresponding Token from the database.
  *
- * @param {String} token - The jwt to decrypt
- * @returns {Object} - The Token found in the database
+ * @param {String} token - The JWT to decrypt and verify.
+ * @returns {Promise<[Token | null, Error | null]>} - An array containing the verified Token object and an error (if any).
+ *                                                  The Token object will be null if there was an error verifying the JWT.
+ *                                                  The error will be null if the operation was successful.
  */
 const verifyToken = async (token) => {
-  // Decrypt the provided token to retrieve the payload it contains
-  const payload = jwt.verify(token, envConfig.jwt.secret);
+  try {
+    // Decrypt the provided token to retrieve the payload it contains
+    const payload = jwt.verify(token, envConfig.jwt.secret);
 
-  // Retrieve the Token from the database
-  const foundToken = await dbService.findOne(Token, {
-    token: token,
-    id_user: payload.sub,
-  });
+    // Retrieve the token from the database based on the token and user ID from the JWT payload
+    const foundToken = await dbService.findOne(Token, {
+      token: token,
+      id_user: payload.sub,
+    });
 
-  if (!foundToken) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Token not found");
+    // If the token is not found, throw an ApiError
+    if (!foundToken) {
+      throw new ApiError(httpStatus.NOT_FOUND, "Token not found");
+    }
+
+    return [foundToken, null];
+  } catch (error) {
+    // Error occurred during JWT verification or database operation
+    return [null, error];
   }
-
-  return foundToken;
 };
 
 /**
