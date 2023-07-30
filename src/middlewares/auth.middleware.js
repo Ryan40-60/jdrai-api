@@ -6,9 +6,9 @@ import ApiError from "../class/ApiError.js";
 import { roles } from "../config/enum.config.js";
 
 /**
- * @description: Checks if the user is authenticated
+ * @description: Checks whether the user is authenticated and, if necessary, an administrator.
  *
- * @params {boolean} needAdmin - check if the user is admin if true
+ * @params {boolean} admin - Check if the user is admin if true
  * @returns A middleware that authenticates the user
  */
 const auth = (admin) => {

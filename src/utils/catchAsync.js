@@ -1,5 +1,5 @@
 /**
- * @description: Encapsulate a middleware to catch potential errors
+ * @description: Encapsulate a middleware to catch potential errors.
  *
  * @param {function} middleware - The middleware to encapsulate
  * @returns A middleware that knows how to handle errors

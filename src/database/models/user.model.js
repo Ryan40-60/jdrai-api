@@ -45,10 +45,11 @@ const User = sequelize.define(
 );
 
 /**
- * @description : Hashes the password of a user
+ * @description Hashes the password of a user
  *
- * @param {*} user : Object containing the user whose password needs to be hashed
- * @returns : The user object with the hashed password
+ * @param {Model} user - Object containing the user whose password needs to be hashed
+ * @param {Object} options - Options for the hashing process (if any)
+ * @returns {Model} - The user object with the hashed password
  */
 const hashPassword = async (user, options) => {
   // If the password is not defined, return the object as it is
@@ -58,9 +59,9 @@ const hashPassword = async (user, options) => {
 
   // Number of rounds to generate the salt
   const saltRounds = 10;
-  // Generate the salt
+  // Generate the salt using bcrypt
   const salt = await bcrypt.genSalt(saltRounds);
-  // Hash the password with the salt
+  // Hash the password with the generated salt using bcrypt
   user.password = await bcrypt.hash(user.password, salt);
 
   return user;
@@ -76,23 +77,31 @@ User.addHook(
 );
 
 /**
- * @description : Validates if the provided password matches the user's password
+ * @description Validates if the provided password matches the user's password
  *
- * @param {string} password : Password to validate
- * @returns {Promise<boolean>} : Returns a promise that resolves to a boolean
- *  indicating whether the password matches the user's password or not
+ * @param {string} password - Password to validate
+ * @returns {Promise<boolean>} - Returns a promise that resolves to a boolean
+ *                               indicating whether the password matches the user's password or not
  */
 User.prototype.validatePassword = async function (password) {
+  // Create a new User object with the stored hashed password
   const user = User.build({ password: this.password });
+
+  // Compare the provided password with the stored hashed password using bcrypt
   return await bcrypt.compare(password, user.password);
 };
 
 /**
- * @description : Removes the password field from the user object before sending it
+ * @description Removes the password field from the user object before sending it
  */
 User.prototype.toJSON = function () {
+  // Clone the user object using Object.assign to avoid modifying the original object
   let values = Object.assign({}, this.get());
+
+  // Delete the password field from the cloned object
   delete values.password;
+
+  // Return the cloned object without the password field
   return values;
 };
 

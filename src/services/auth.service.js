@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 
 import dbService from "./db.service.js";
 import ApiError from "../class/ApiError.js";
+
 import User from "../database/models/user.model.js";
 
 /**
@@ -32,9 +33,9 @@ const isMailAvailable = async (mail) => {
  * @param {string} username - The username of the new user.
  * @param {string} mail - The email of the new user.
  * @param {string} password - The password of the new user.
- * @returns {Promise<[Array<User> | null, Error | null]>} Returns an array containing the newly registered user and an error (if any).
- *                                                        The user will be null if there was an error during registration.
- *                                                        The error will be null if registration was successful.
+ * @returns {Promise<[User | null, Error | null]>} Returns an array containing the newly registered user and an error (if any).
+ *                                                   The user will be null if there was an error during registration.
+ *                                                   The error will be null if registration was successful.
  */
 const register = async (username, mail, password) => {
   const data = { username, mail, password };
@@ -53,7 +54,7 @@ const register = async (username, mail, password) => {
  *
  * @param {string} usernameOrEmail - Either the username or the email of the user.
  * @param {string} password - The password of the user.
- * @returns {Promise<[Array<User> | null, Error | null]>} Returns an array containing the authenticated user and an error (if any).
+ * @returns {Promise<[User | null, Error | null]>} Returns an array containing the authenticated user and an error (if any).
  *                                                        The user will be null if authentication fails.
  *                                                        The error will be null if authentication is successful.
  */

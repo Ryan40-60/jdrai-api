@@ -11,7 +11,7 @@ import dbService from "./db.service.js";
 import Token from "../database/models/token.model.js";
 
 /**
- * @description : Generates a Json Web Token (JWT) based on the user ID
+ * @description : Generates a Json Web Token (JWT) based on the user ID.
  *
  * @param {String} userId - The ID of the user generating the token
  * @param {Date} expires - Expiration date of the token
@@ -30,7 +30,7 @@ const generateToken = (userId, expires, secret = envConfig.jwt.secret) => {
 };
 
 /**
- * @description : Deletes the refreshToken associated with the user ID when logging in
+ * @description : Deletes the refreshToken associated with the user ID when logging in.
  *
  * @param {String} userId - The ID of the user logging in
  */
@@ -48,7 +48,7 @@ const deleteRefreshToken = async (userId) => {
 };
 
 /**
- * @description : Decrypts the jwt and returns the Token from the database
+ * @description : Decrypts the jwt and returns the Token from the database.
  *
  * @param {String} token - The jwt to decrypt
  * @returns {Object} - The Token found in the database
@@ -64,17 +64,19 @@ const verifyToken = async (token) => {
   });
 
   if (!foundToken) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, "Token not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Token not found");
   }
 
   return foundToken;
 };
 
 /**
- * @description : Generates two authentication tokens
+ * @description Generates two authentication tokens for the provided user.
  *
- * @param {Object} user - The user found in the database
- * @returns {Object} - An object containing an access token and a refresh token
+ * @param {Object} user - The user found in the database.
+ * @returns {Promise<[Object | null, Error | null]>} - An array containing an object with access and refresh tokens, and an error (if any).
+ *                                                     The tokens object will be null if there was an error generating the tokens.
+ *                                                     The error will be null if the operation was successful.
  */
 const generateAuthTokens = async (user) => {
   try {
@@ -92,6 +94,7 @@ const generateAuthTokens = async (user) => {
     );
     const refreshToken = generateToken(user.id, refreshTokenExpires);
 
+    // Delete the refreshToken associated with the user if it exists
     await deleteRefreshToken(user.id);
 
     // Save the refreshToken in the database
@@ -103,6 +106,7 @@ const generateAuthTokens = async (user) => {
       blacklisted: false,
     });
 
+    // Return the generated tokens in an object along with null error
     return [
       {
         access: {
@@ -117,6 +121,7 @@ const generateAuthTokens = async (user) => {
       null,
     ];
   } catch (error) {
+    // Return null tokens and the error in case of failure
     return [null, error];
   }
 };
@@ -124,6 +129,7 @@ const generateAuthTokens = async (user) => {
 const tokenService = {
   verifyToken,
   generateAuthTokens,
+  deleteRefreshToken,
 };
 
 export default tokenService;

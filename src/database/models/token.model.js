@@ -23,9 +23,8 @@ const Token = sequelize.define(
       allowNull: false,
       validate: {
         customValidator: (value) => {
-          const enums = [tokens.REFRESH];
-          if (!enums.includes(value)) {
-            throw new Error("Not a valid option");
+          if (value !== tokens.REFRESH) {
+            throw new Error("Invalid token type");
           }
         },
       },

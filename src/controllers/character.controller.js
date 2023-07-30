@@ -31,30 +31,6 @@ export const createCharacter = catchAsync(async (req, res) => {
 });
 
 /**
- * @description Controller function for retrieving a character.
- *
- * @param {Object} req - Object representing the request sent to the server.
- * @param {Object} res - Object representing the response to be sent to the client.
- */
-export const getCharacter = catchAsync(async (req, res) => {
-  // Extract the character's ID from the request parameters
-  const { id: characterId } = req.params;
-
-  // Attempt to retrieve the character associated with the authenticated user
-  const [character, characterError] = await characterService.getCharacter(
-    characterId
-  );
-
-  // If there was an error during the fetch, throw the error
-  if (characterError) {
-    throw characterError;
-  }
-
-  // Send the character data in the response
-  res.send(character);
-});
-
-/**
  * @description Controller function for listing all characters associated with the authenticated user.
  *
  * @param {Object} req - Object representing the request sent to the server.
@@ -69,13 +45,37 @@ export const listCharacters = catchAsync(async (req, res) => {
     userId
   );
 
-  // If there was an error during the fetch, throw the error
+  // If there was an error during fetch, throw the error
   if (characterError) {
     throw characterError;
   }
 
   // Send the characters data in the response
   res.send(characters);
+});
+
+/**
+ * @description Controller function for retrieving a character.
+ *
+ * @param {Object} req - Object representing the request sent to the server.
+ * @param {Object} res - Object representing the response to be sent to the client.
+ */
+export const getCharacter = catchAsync(async (req, res) => {
+  // Extract the character's ID from the request parameters
+  const { id: characterId } = req.params;
+
+  // Attempt to retrieve the character associated with the authenticated user
+  const [character, characterError] = await characterService.getCharacter(
+    characterId
+  );
+
+  // If there was an error during fetch, throw the error
+  if (characterError) {
+    throw characterError;
+  }
+
+  // Send the character data in the response
+  res.send(character);
 });
 
 /**
@@ -99,7 +99,7 @@ export const updateCharacter = catchAsync(async (req, res) => {
       name
     );
 
-  // If there was an error during the update, throw the error
+  // If there was an error during update, throw the error
   if (characterError) {
     throw characterError;
   }

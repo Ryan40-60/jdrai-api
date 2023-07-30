@@ -20,13 +20,13 @@ const successResponseFormat = `[:date[Europe/Paris]] ${getIpFormat()}:method :ur
 // Error response format
 const errorResponseFormat = `[:date[Europe/Paris]] ${getIpFormat()}:method :url :status - :response-time ms - message: :message`;
 
-// Success handler
+// Request success handler
 export const requestSuccessHandler = morgan(successResponseFormat, {
   skip: (req, res) => res.statusCode >= 400,
   stream: { write: (message) => logger.info(message.trim()) },
 });
 
-// Error handler
+// Request error handler
 export const requestErrorHandler = morgan(errorResponseFormat, {
   skip: (req, res) => res.statusCode < 400,
   stream: { write: (message) => logger.error(message.trim()) },

@@ -1,7 +1,5 @@
 import Joi from "joi";
 
-import { validateUUID } from "./custom.validation.js";
-
 /**
  * @description: Joi Schemas for authentication-related requests.
  */

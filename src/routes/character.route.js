@@ -14,6 +14,14 @@ import {
 
 const router = express.Router();
 
+// Create character route
+router.post(
+  "/",
+  auth(),
+  validate(characterValidation.createCharacter),
+  createCharacter
+);
+
 // List characters route
 router.get("/", auth(), listCharacters);
 
@@ -23,14 +31,6 @@ router.get(
   auth(),
   validate(characterValidation.getCharacter),
   getCharacter
-);
-
-// Create character route
-router.post(
-  "/",
-  auth(),
-  validate(characterValidation.createCharacter),
-  createCharacter
 );
 
 // Update character route

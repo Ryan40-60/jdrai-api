@@ -21,16 +21,16 @@ export const register = catchAsync(async (req, res) => {
   // Check if the provided username is available
   const usernameAvailable = await authService.isUsernameAvailable(username);
   if (!usernameAvailable) {
-    throw new ApiError(httpStatus.CONFLICT, `Username already taken`);
+    throw new ApiError(httpStatus.CONFLICT, "Username already taken");
   }
 
   // Check if the provided email is available
   const mailAvailable = await authService.isMailAvailable(mail);
   if (!mailAvailable) {
-    throw new ApiError(httpStatus.CONFLICT, `Email already taken`);
+    throw new ApiError(httpStatus.CONFLICT, "Email already taken");
   }
 
-  // Attempt to register the user using the authentication service
+  // Attempt to register the user
   const [user, userError] = await authService.register(
     username,
     mail,
@@ -42,7 +42,7 @@ export const register = catchAsync(async (req, res) => {
     throw userError;
   }
 
-  // Generate authentication tokens for the authenticated user using the token service
+  // Attempt to generate authentication tokens for the registered user
   const [tokens, tokenError] = await tokenService.generateAuthTokens(user);
 
   // If there was an error during tokens generation, throw the error
@@ -75,7 +75,7 @@ export const login = catchAsync(async (req, res) => {
     );
   }
 
-  // Attempt login using the provided log information
+  // Attempt login using the provided logs information
   const [user, userError] = await authService.login(usernameOrEmail, password);
 
   // If there was an error during login, throw the error
@@ -83,7 +83,7 @@ export const login = catchAsync(async (req, res) => {
     throw userError;
   }
 
-  // Generate authentication tokens for the authenticated user using the token service
+  // Attempt to generate authentication tokens for the authenticated user
   const [tokens, tokenError] = await tokenService.generateAuthTokens(user);
 
   // If there was an error during tokens generation, throw the error

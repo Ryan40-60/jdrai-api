@@ -1,6 +1,6 @@
 {
   "name": "jdr-api",
-  "version": "0.5.0",
+  "version": "0.0.5",
   "description": "Backend application for JDR-AI project",
   "main": "index.js",
   "type": "module",

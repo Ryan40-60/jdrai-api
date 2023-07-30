@@ -1,13 +1,14 @@
+import httpStatus from "http-status";
+
 import dbService from "./db.service.js";
+import ApiError from "../class/ApiError.js";
 
 import User from "../database/models/user.model.js";
-import ApiError from "../class/ApiError.js";
-import httpStatus from "http-status";
 
 /**
  * @description: Retrieves a list of all users from the database.
  *
- * @returns {Promise<[User[] | null, Error | null]>} An array containing the list of users and an error (if any).
+ * @returns {Promise<[Array<User> | null, Error | null]>} An array containing the list of users and an error (if any).
  *                                                  The user array will be null if there was an error fetching the users.
  *                                                  The error will be null if the operation was successful.
  */

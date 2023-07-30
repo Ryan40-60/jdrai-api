@@ -5,10 +5,10 @@ import ApiError from "../class/ApiError.js";
 import { createSubset } from "../utils/generic.js";
 
 /**
- * @description : Middleware for validating data received by the API
+ * @description Middleware for validating data received by the API.
  *
- * @param {*} schema - The validation schema to use
- * @returns - A validation middleware for JOI
+ * @param {Object} schema - The validation schema to use.
+ * @returns {Function} - A validation middleware for JOI.
  */
 const validate = (schema) => {
   return (req, res, next) => {

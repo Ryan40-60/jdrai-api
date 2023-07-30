@@ -8,41 +8,44 @@ import logger from "../config/logger.config.js";
 /**
  * @description Handles Sequelize-related errors and converts them into an appropriate ApiError.
  *
- * @param {*} err The error to be handled.
- * @param {*} req The request associated with the error.
- * @returns The handled error.
+ * @param {Error} err The error to be handled.
+ * @param {Object} req The request associated with the error.
+ * @returns {Error} The handled error.
  */
 const sequelizeErrorHandler = (err, req) => {
   // Check if the error is related to sequelize
   if (!(err instanceof sequelize.Error)) {
+    // If the error is not related to sequelize, return it as is
     return err;
   }
 
   // Validation error: Convert to ApiError with the first validation error message
   if (err instanceof sequelize.ValidationError) {
-    return new ApiError(
-      httpStatus.BAD_REQUEST,
-      err.errors.shift().message,
-      true,
-      err.stack
-    );
+    // Extract the first validation error message
+    const errorMessage =
+      err.errors.length > 0 ? err.errors[0].message : "Validation error";
+
+    // Create a new ApiError with the validation error message and relevant information
+    return new ApiError(httpStatus.BAD_REQUEST, errorMessage, true, err.stack);
   }
 
   // Other database error: Convert to ApiError with the database error message
   if (err instanceof sequelize.DatabaseError) {
+    // Create a new ApiError with the database error message and relevant information
     return new ApiError(httpStatus.BAD_REQUEST, err.message, true, err.stack);
   }
 
+  // If the error is related to sequelize but doesn't fall into the above categories, return it as is
   return err;
 };
 
 /**
  * @description Error handling function for middleware. Converts any non-ApiError error to ApiError.
  *
- * @param {*} err The error to handle.
- * @param {*} req The current request.
- * @param {*} res The response to send in case of an error.
- * @param {*} next The function to execute after handling the error.
+ * @param {Error} err The error to handle.
+ * @param {Object} req The current request.
+ * @param {Object} res The response to send in case of an error.
+ * @param {Function} next The function to execute after handling the error.
  */
 export const errorConverter = (err, req, res, next) => {
   let error = err;
@@ -54,6 +57,8 @@ export const errorConverter = (err, req, res, next) => {
   if (!(error instanceof ApiError)) {
     const statusCode = error.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
     const message = error.message || httpStatus[statusCode];
+
+    // Create a new ApiError with the relevant status code, message, and stack trace
     error = new ApiError(statusCode, message, false, err.stack);
   }
 
@@ -64,9 +69,9 @@ export const errorConverter = (err, req, res, next) => {
  * @description Error handler for middlewares. Sends an appropriate error response to the client.
  *
  * @param {Error} err The error to handle.
- * @param {*} req The request associated with the error.
- * @param {*} res The response to send in case of an error.
- * @param {*} next The function to execute after handling the error.
+ * @param {Object} req The request associated with the error.
+ * @param {Object} res The response to send in case of an error.
+ * @param {Function} next The function to execute after handling the error.
  */
 export const errorHandler = (err, req, res, next) => {
   let { statusCode, message } = err;

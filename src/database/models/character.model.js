@@ -30,6 +30,7 @@ const Character = sequelize.define(
   }
 );
 
+// Foreign key associations with corresponding tables
 User.hasMany(Character, { foreignKey: "id_user" });
 Character.belongsTo(User, { foreignKey: "id_user" });
 

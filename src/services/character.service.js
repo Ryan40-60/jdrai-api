@@ -60,7 +60,7 @@ const getCharacter = async (characterId) => {
     // Fetch the character from the database using the character ID
     let character = await dbService.findByPk(Character, characterId);
 
-    // Add character class information to the character using the addCharacterClass function
+    // Add character class information to the character
     character = await addCharacterClass(character);
 
     // Return the character object with the class information added
@@ -72,7 +72,7 @@ const getCharacter = async (characterId) => {
 };
 
 /**
- * @description Retrieves a list of all characters associated with the authenticated user.
+ * @description Retrieves a list of all characters associated with the authenticated user and adds character class informations.
  *
  * @param {string} userId - The ID of the authenticated user.
  * @returns {Promise<[Array<Character> | null, Error | null]>} An array containing the list of characters and an error (if any).
@@ -84,7 +84,7 @@ const listCharacters = async (userId) => {
     // Fetch all characters associated with the authenticated user from the database
     let characters = await dbService.findAll(Character, { id_user: userId });
 
-    // Add character class information to each character using the addCharacterClass function
+    // Add character class information to each character
     characters = await Promise.all(
       characters.map((character) => addCharacterClass(character))
     );
@@ -184,7 +184,7 @@ const addCharacterClass = async (character) => {
  *
  * @param {string} userId - The ID of the authenticated user.
  * @param {string} characterId - The ID of the character to be verified.
- * @returns {Object} - The character object with the class information added.
+ * @returns {void}
  */
 const verifyBelonging = async (userId, characterId) => {
   // Check if the character exists in the database
@@ -195,11 +195,12 @@ const verifyBelonging = async (userId, characterId) => {
     throw new ApiError(httpStatus.NOT_FOUND, "Character not found");
   }
 
-  // Check if the authenticated user owns the character
+  // Check if the authenticated user owns the character, if not throw an ApiError
   if (userId !== character.id_user) {
     throw new ApiError(httpStatus.FORBIDDEN, "Forbidden");
   }
 
+  // If the character is found and the user owns it, the function completes successfully
   return;
 };
 
