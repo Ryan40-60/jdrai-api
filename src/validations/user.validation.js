@@ -38,6 +38,20 @@ const updateUser = {
   }),
 };
 
-const userValidation = { getUser, updateAuthenticatedUser, updateUser };
+/**
+ * @description: Schema for the "deleteUser" request
+ */
+const deleteUser = {
+  params: Joi.object().keys({
+    id: Joi.string().uuid(),
+  }),
+};
+
+const userValidation = {
+  getUser,
+  updateAuthenticatedUser,
+  updateUser,
+  deleteUser,
+};
 
 export default userValidation;
