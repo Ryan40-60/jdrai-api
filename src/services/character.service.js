@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 
 import dbService from "./db.service.js";
 import ApiError from "../class/ApiError.js";
+import characterClassService from "./characterClass.service.js";
 
 import Character from "../database/models/character.model.js";
 import CharacterClass from "../database/models/characterClass.model.js";
@@ -60,8 +61,24 @@ const getCharacter = async (characterId) => {
     // Fetch the character from the database using the character ID
     let character = await dbService.findByPk(Character, characterId);
 
+    // If the character is not found, throw an ApiError
+    if (!character) {
+      throw new ApiError(httpStatus.NOT_FOUND, "Character not found");
+    }
+
+    // Attempt to find the character class associated with the character
+    const [characterClass, characterClassError] =
+      await characterClassService.getCharacterClass(
+        character.id_characterClass
+      );
+
+    // If there was an error during fetch, throw the error
+    if (characterClassError) {
+      throw characterClassError;
+    }
+
     // Add character class information to the character
-    character = await addCharacterClass(character);
+    character.dataValues.class = characterClass;
 
     // Return the character object with the class information added
     return [character, null];
@@ -82,12 +99,25 @@ const getCharacter = async (characterId) => {
 const listCharacters = async (userId) => {
   try {
     // Fetch all characters associated with the authenticated user from the database
-    let characters = await dbService.findAll(Character, { id_user: userId });
+    // let characters = await dbService.findAll(Character, { id_user: userId });
+    let characters = await dbService.findAll(Character);
 
     // Add character class information to each character
-    characters = await Promise.all(
-      characters.map((character) => addCharacterClass(character))
-    );
+    for (const character of characters) {
+      // Attempt to find the character class associated with the character
+      const [characterClass, characterClassError] =
+        await characterClassService.getCharacterClass(
+          character.id_characterClass
+        );
+
+      // If there was an error during fetch, throw the error
+      if (characterClassError) {
+        throw characterClassError;
+      }
+
+      // Add character class information to the character
+      character.dataValues.class = characterClass;
+    }
 
     return [characters, null];
   } catch (error) {
@@ -125,8 +155,19 @@ const updateCharacter = async (userId, characterId, characterClassId, name) => {
       data
     );
 
-    // Add character class information to the updated character using the addCharacterClass function
-    updatedCharacter = await addCharacterClass(updatedCharacter);
+    // Attempt to find the character class associated with the character
+    const [characterClass, characterClassError] =
+      await characterClassService.getCharacterClass(
+        updatedCharacter.id_characterClass
+      );
+
+    // If there was an error during fetch, throw the error
+    if (characterClassError) {
+      throw characterClassError;
+    }
+
+    // Add character class information to the updated character
+    updatedCharacter.dataValues.class = characterClass;
 
     return [updatedCharacter, null];
   } catch (error) {
@@ -152,31 +193,6 @@ const deleteCharacter = async (userId, characterId) => {
   await dbService.deleteByPk(Character, characterId);
 
   return;
-};
-
-/**
- * @description Adds character class information to the given character object.
- *
- * @param {Object} character - The character object to which the class information will be added.
- * @returns {Object} - The character object with the class information added.
- */
-const addCharacterClass = async (character) => {
-  // Fetch the character class from the database using the character's class ID
-  const characterClass = await dbService.findByPk(
-    CharacterClass,
-    character.id_characterClass
-  );
-
-  // If the character class is not found, throw an ApiError
-  if (!characterClass) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Character class not found");
-  }
-
-  // Add the character class information to the character object
-  character.dataValues.class = characterClass;
-
-  // Return the character object with the class information added
-  return character;
 };
 
 /**

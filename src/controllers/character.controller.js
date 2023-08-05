@@ -1,7 +1,6 @@
 import catchAsync from "../utils/catchAsync.js";
 
 import characterService from "../services/character.service.js";
-import httpStatus from "http-status";
 
 /**
  * @description: Controller function for creating a character.
