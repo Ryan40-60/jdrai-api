@@ -19,7 +19,7 @@ const getUser = {
 const updateAuthenticatedUser = {
   body: Joi.object().keys({
     username: Joi.string().required(),
-    mail: Joi.string().email().required(),
+    email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
 };
@@ -33,7 +33,7 @@ const updateUser = {
   }),
   body: Joi.object().keys({
     username: Joi.string().required(),
-    mail: Joi.string().email().required(),
+    email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
 };

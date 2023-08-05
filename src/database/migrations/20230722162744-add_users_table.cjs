@@ -21,7 +21,7 @@ module.exports = {
         unique: true,
         trim: true,
       },
-      mail: {
+      email: {
         type: Sequelize.STRING,
         allowNull: false,
         trim: true,

@@ -17,7 +17,7 @@ import Token from "../database/models/token.model.js";
  */
 export const register = catchAsync(async (req, res) => {
   // Extract the necessary data from the request
-  const { username, mail, password } = req.body;
+  const { username, email, password } = req.body;
 
   // Check if the provided username is available
   const usernameAvailable = await authService.isUsernameAvailable(username);
@@ -26,15 +26,15 @@ export const register = catchAsync(async (req, res) => {
   }
 
   // Check if the provided email is available
-  const mailAvailable = await authService.isMailAvailable(mail);
-  if (!mailAvailable) {
+  const emailAvailable = await authService.isEmailAvailable(email);
+  if (!emailAvailable) {
     throw new ApiError(httpStatus.CONFLICT, "Email already taken");
   }
 
   // Attempt to register the user
   const [user, userError] = await authService.register(
     username,
-    mail,
+    email,
     password
   );
 
@@ -51,11 +51,8 @@ export const register = catchAsync(async (req, res) => {
     throw tokenError;
   }
 
-  // Add authentication tokens to the registered user
-  user.dataValues.tokens = tokens;
-
-  // Send the user data in the response
-  res.send(user);
+  // Send the user data and the tokens in the response
+  res.send({ user, ...tokens });
 });
 
 /**
@@ -92,11 +89,8 @@ export const login = catchAsync(async (req, res) => {
     throw tokenError;
   }
 
-  // Add authentication tokens to the logged user
-  user.dataValues.tokens = tokens;
-
-  // Send the user data in the response
-  res.send(user);
+  // Send the user data and the tokens in the response
+  res.send({ user, ...tokens });
 });
 
 /**

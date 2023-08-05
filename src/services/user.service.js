@@ -54,16 +54,16 @@ const getUserById = async (userId) => {
  *
  * @param {string} userId - The ID of the user to update.
  * @param {string} username - The updated username for the user.
- * @param {string} mail - The updated email for the user.
+ * @param {string} email - The updated email for the user.
  * @param {string} password - The updated password for the user.
  * @returns {Promise<[User | null, ApiError | null]>} An array containing the updated user object and an error (if any).
  *                                                  The user will be null if the user with the given ID was not found.
  *                                                  The error will be null if the operation was successful.
  */
-const updateUser = async (userId, username, mail, password) => {
+const updateUser = async (userId, username, email, password) => {
   const data = {
     username: username,
-    mail: mail,
+    email: email,
     password: password,
   };
   try {

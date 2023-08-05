@@ -19,11 +19,11 @@ const isUsernameAvailable = async (username) => {
 /**
  * @description: Checks if the provided email is available.
  *
- * @param {string} mail - The email to check for availability.
+ * @param {string} email - The email to check for availability.
  * @returns {boolean} - Returns true if the email is available, false otherwise.
  */
-const isMailAvailable = async (mail) => {
-  const user = await dbService.findOne(User, { mail: mail });
+const isEmailAvailable = async (email) => {
+  const user = await dbService.findOne(User, { email: email });
   return !user;
 };
 
@@ -31,14 +31,14 @@ const isMailAvailable = async (mail) => {
  * @description: Registers a new user with the provided username, email, and password.
  *
  * @param {string} username - The username of the new user.
- * @param {string} mail - The email of the new user.
+ * @param {string} email - The email of the new user.
  * @param {string} password - The password of the new user.
  * @returns {Promise<[User | null, Error | null]>} Returns an array containing the newly registered user and an error (if any).
  *                                                   The user will be null if there was an error during registration.
  *                                                   The error will be null if registration was successful.
  */
-const register = async (username, mail, password) => {
-  const data = { username, mail, password };
+const register = async (username, email, password) => {
+  const data = { username, email, password };
   try {
     // Create a new user in the database with the provided data
     const user = await dbService.create(User, data);
@@ -68,7 +68,7 @@ const login = async (usernameOrEmail, password) => {
     // If user not found, find user by email and password
     if (!user) {
       user = await dbService.findOne(User, {
-        mail: usernameOrEmail,
+        email: usernameOrEmail,
       });
     }
 
@@ -92,7 +92,7 @@ const login = async (usernameOrEmail, password) => {
 
 export default {
   isUsernameAvailable,
-  isMailAvailable,
+  isEmailAvailable,
   register,
   login,
 };

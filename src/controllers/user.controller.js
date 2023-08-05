@@ -80,7 +80,7 @@ export const getUser = catchAsync(async (req, res) => {
  */
 export const updateAuthenticatedUser = catchAsync(async (req, res) => {
   // Extract the necessary data from the request
-  const { username, mail, password } = req.body;
+  const { username, email, password } = req.body;
   const user = req.user;
 
   // Check if the provided username is available
@@ -92,9 +92,9 @@ export const updateAuthenticatedUser = catchAsync(async (req, res) => {
   }
 
   // Check if the provided email is available
-  if (user.mail !== mail) {
-    const mailAvailable = await authService.isMailAvailable(mail);
-    if (!mailAvailable) {
+  if (user.email !== email) {
+    const emailAvailable = await authService.isEmailAvailable(email);
+    if (!emailAvailable) {
       throw new ApiError(httpStatus.CONFLICT, "Email already taken");
     }
   }
@@ -103,7 +103,7 @@ export const updateAuthenticatedUser = catchAsync(async (req, res) => {
   const [updatedUser, userError2] = await userService.updateUser(
     user.id,
     username,
-    mail,
+    email,
     password
   );
 
@@ -124,7 +124,7 @@ export const updateAuthenticatedUser = catchAsync(async (req, res) => {
  */
 export const updateUser = catchAsync(async (req, res) => {
   // Extract the necessary data from the request
-  const { username, mail, password } = req.body;
+  const { username, email, password } = req.body;
   const { id: userId } = req.params;
 
   // Attempt to retrieve the user
@@ -144,9 +144,9 @@ export const updateUser = catchAsync(async (req, res) => {
   }
 
   // Check if the provided email is available
-  if (user.mail !== mail) {
-    const mailAvailable = await authService.isMailAvailable(mail);
-    if (!mailAvailable) {
+  if (user.email !== email) {
+    const emailAvailable = await authService.isEmailAvailable(email);
+    if (!emailAvailable) {
       throw new ApiError(httpStatus.CONFLICT, "Email already taken");
     }
   }
@@ -155,7 +155,7 @@ export const updateUser = catchAsync(async (req, res) => {
   const [updatedUser, userError2] = await userService.updateUser(
     userId,
     username,
-    mail,
+    email,
     password
   );
 
