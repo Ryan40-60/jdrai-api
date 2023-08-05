@@ -610,6 +610,52 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "CharacterClass",
+			"item": [
+				{
+					"name": "list_character_classes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/class",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"class"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_character_class",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/class/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"class",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
