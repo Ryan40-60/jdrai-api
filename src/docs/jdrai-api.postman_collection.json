@@ -19,8 +19,8 @@
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);\r",
 									"\r",
-									"pm.collectionVariables.set(\"accessToken\", jsonData.tokens.access.token);\r",
-									"pm.collectionVariables.set(\"refreshToken\", jsonData.tokens.refresh.token);"
+									"pm.collectionVariables.set(\"accessToken\", jsonData.access.token);\r",
+									"pm.collectionVariables.set(\"refreshToken\", jsonData.refresh.token);"
 								],
 								"type": "text/javascript"
 							}
@@ -31,7 +31,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"\",\r\n    \"mail\": \"\",\r\n    \"password\": \"\"\r\n}",
+							"raw": "{\r\n    \"username\": \"\",\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -61,8 +61,8 @@
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);\r",
 									"\r",
-									"pm.collectionVariables.set(\"accessToken\", jsonData.tokens.access.token);\r",
-									"pm.collectionVariables.set(\"refreshToken\", jsonData.tokens.refresh.token);"
+									"pm.collectionVariables.set(\"accessToken\", jsonData.access.token);\r",
+									"pm.collectionVariables.set(\"refreshToken\", jsonData.refresh.token);"
 								],
 								"type": "text/javascript"
 							}
@@ -95,6 +95,18 @@
 				},
 				{
 					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.unset(\"accessToken\");\r",
+									"pm.collectionVariables.unset(\"refreshToken\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -293,7 +305,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"\",\r\n    \"mail\": \"\",\r\n    \"password\": \"\"\r\n}",
+							"raw": "{\r\n    \"username\": \"\",\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -336,7 +348,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"\",\r\n    \"mail\": \"\",\r\n    \"password\": \"\"\r\n}",
+							"raw": "{\r\n    \"username\": \"\",\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -642,8 +654,7 @@
 		},
 		{
 			"key": "accessToken",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
 			"key": "refreshToken",
