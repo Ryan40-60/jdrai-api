@@ -19,7 +19,7 @@ const createCharacter = {
  */
 const getCharacter = {
   params: Joi.object().keys({
-    id: Joi.string().uuid(),
+    id: Joi.number().integer(),
   }),
 };
 
@@ -28,7 +28,7 @@ const getCharacter = {
  */
 const updateCharacter = {
   params: Joi.object().keys({
-    id: Joi.string().uuid(),
+    id: Joi.number().integer(),
   }),
   body: Joi.object().keys({
     characterClassId: Joi.number().integer().required(),
@@ -41,7 +41,7 @@ const updateCharacter = {
  */
 const deleteCharacter = {
   params: Joi.object().keys({
-    id: Joi.string().uuid(),
+    id: Joi.number().integer(),
   }),
 };
 

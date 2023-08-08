@@ -13,7 +13,7 @@ const CharacterClass = sequelize.define("character_classes", {
     allowNull: false,
     primaryKey: true,
   },
-  class: {
+  type: {
     type: DataTypes.STRING,
     allowNull: false,
     trim: true,

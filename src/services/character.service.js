@@ -99,8 +99,7 @@ const getCharacter = async (characterId) => {
 const listCharacters = async (userId) => {
   try {
     // Fetch all characters associated with the authenticated user from the database
-    // let characters = await dbService.findAll(Character, { id_user: userId });
-    let characters = await dbService.findAll(Character);
+    const characters = await dbService.findAll(Character, { id_user: userId });
 
     // Add character class information to each character
     for (const character of characters) {
