@@ -24,10 +24,6 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      blacklisted: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
-      },
       createdAt: {
         type: Sequelize.DATE,
       },

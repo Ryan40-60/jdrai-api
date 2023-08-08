@@ -11,13 +11,15 @@
     "prod:migrate:undo": "cross-env NODE_ENV=production npx sequelize-cli db:migrate:undo",
     "prod:seed": "cross-env NODE_ENV=production npx sequelize-cli db:seed:all",
     "dev": "npm run dev:migrate && npm run dev:seed && cross-env NODE_ENV=development npx nodemon --inspect src/index.js",
-    "dev:reset": "npm run dev:migrate:undo:all && npm run dev:migrate && npm run dev:seed",
+    "dev:reset": "npm run dev:migrate:undo:all && npm run dev:migrate && npm run dev:seed && npm run dev:mock",
     "dev:create": "cross-env NODE_ENV=development npx sequelize-cli db:create",
     "dev:migrate": "cross-env NODE_ENV=development npx sequelize-cli db:migrate",
     "dev:migrate:undo": "cross-env NODE_ENV=development npx sequelize-cli db:migrate:undo",
     "dev:migrate:undo:all": "cross-env NODE_ENV=development npx sequelize-cli db:migrate:undo:all",
     "dev:seed": "cross-env NODE_ENV=development npx sequelize-cli db:seed:all",
-    "dev:seed:undo": "cross-env NODE_ENV=development npx sequelize-cli db:seed:undo:all"
+    "dev:seed:undo": "cross-env NODE_ENV=development npx sequelize-cli db:seed:undo:all",
+    "dev:mock": "cross-env NODE_ENV=development npx sequelize-cli db:seed:all --seeders-path src/database/mocks",
+    "dev:mock:undo": "cross-env NODE_ENV=development npx sequelize-cli db:seed:undo:all --seeders-path src/database/mocks"
   },
   "author": "",
   "license": "ISC",

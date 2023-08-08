@@ -10,7 +10,6 @@ import sequelize from "../../config/db.config.js";
 const CharacterClass = sequelize.define("character_classes", {
   id: {
     type: DataTypes.INTEGER,
-    defaultValue: DataTypes.UUIDV4,
     allowNull: false,
     primaryKey: true,
   },

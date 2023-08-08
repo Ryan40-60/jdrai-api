@@ -33,10 +33,6 @@ const Token = sequelize.define(
       type: DataTypes.DATE,
       allowNull: false,
     },
-    blacklisted: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
   },
   {
     timestamps: true,
