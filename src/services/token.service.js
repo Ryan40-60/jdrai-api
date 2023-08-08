@@ -67,7 +67,7 @@ const verifyToken = async (token) => {
 
     // If the token is not found, throw an ApiError
     if (!foundToken) {
-      throw new ApiError(httpStatus.NOT_FOUND, "Token not found");
+      throw new ApiError(httpStatus.NOT_FOUND, "Token non trouvé");
     }
 
     return [foundToken, null];

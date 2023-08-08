@@ -9,8 +9,8 @@ export const roles = {
 };
 
 export const characterClasses = {
-  WARRIOR: "warrior",
-  THIEF: "thief",
-  MAGE: "mage",
-  ARCHER: "archer",
+  WARRIOR: "Guerrier",
+  THIEF: "Voleur",
+  MAGE: "Mage",
+  ARCHER: "Archer",
 };

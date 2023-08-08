@@ -22,13 +22,13 @@ export const register = catchAsync(async (req, res) => {
   // Check if the provided username is available
   const usernameAvailable = await authService.isUsernameAvailable(username);
   if (!usernameAvailable) {
-    throw new ApiError(httpStatus.CONFLICT, "Username already taken");
+    throw new ApiError(httpStatus.CONFLICT, "Nom d'utilisateur non disponible");
   }
 
   // Check if the provided email is available
   const emailAvailable = await authService.isEmailAvailable(email);
   if (!emailAvailable) {
-    throw new ApiError(httpStatus.CONFLICT, "Email already taken");
+    throw new ApiError(httpStatus.CONFLICT, "Cet email est déjà utilisé");
   }
 
   // Attempt to register the user
@@ -69,7 +69,7 @@ export const login = catchAsync(async (req, res) => {
   if (!usernameOrEmail || !password) {
     throw new ApiError(
       httpStatus.BAD_REQUEST,
-      "Log information missing from the request"
+      "Information de connexion manquante"
     );
   }
 

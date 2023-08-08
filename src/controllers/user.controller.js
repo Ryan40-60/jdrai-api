@@ -87,7 +87,10 @@ export const updateAuthenticatedUser = catchAsync(async (req, res) => {
   if (user.username !== username) {
     const usernameAvailable = await authService.isUsernameAvailable(username);
     if (!usernameAvailable) {
-      throw new ApiError(httpStatus.CONFLICT, "Username already taken");
+      throw new ApiError(
+        httpStatus.CONFLICT,
+        "Nom d'utilisateur non disponible"
+      );
     }
   }
 
@@ -95,7 +98,7 @@ export const updateAuthenticatedUser = catchAsync(async (req, res) => {
   if (user.email !== email) {
     const emailAvailable = await authService.isEmailAvailable(email);
     if (!emailAvailable) {
-      throw new ApiError(httpStatus.CONFLICT, "Email already taken");
+      throw new ApiError(httpStatus.CONFLICT, "Cet email est déjà utilisé");
     }
   }
 
@@ -139,7 +142,10 @@ export const updateUser = catchAsync(async (req, res) => {
   if (user.username !== username) {
     const usernameAvailable = await authService.isUsernameAvailable(username);
     if (!usernameAvailable) {
-      throw new ApiError(httpStatus.CONFLICT, "Username already taken");
+      throw new ApiError(
+        httpStatus.CONFLICT,
+        "Nom d'utilisateur non disponible"
+      );
     }
   }
 
@@ -147,7 +153,7 @@ export const updateUser = catchAsync(async (req, res) => {
   if (user.email !== email) {
     const emailAvailable = await authService.isEmailAvailable(email);
     if (!emailAvailable) {
-      throw new ApiError(httpStatus.CONFLICT, "Email already taken");
+      throw new ApiError(httpStatus.CONFLICT, "Cet email est déjà utilisé");
     }
   }
 

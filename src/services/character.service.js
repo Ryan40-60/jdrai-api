@@ -32,7 +32,10 @@ const createCharacter = async (userId, characterClassId, name) => {
       characterClassId
     );
     if (!characterClass) {
-      throw new ApiError(httpStatus.NOT_FOUND, "Character class not found");
+      throw new ApiError(
+        httpStatus.NOT_FOUND,
+        "Classe de personnage non trouvée"
+      );
     }
 
     // Create the character in the database
@@ -63,7 +66,7 @@ const getCharacter = async (characterId) => {
 
     // If the character is not found, throw an ApiError
     if (!character) {
-      throw new ApiError(httpStatus.NOT_FOUND, "Character not found");
+      throw new ApiError(httpStatus.NOT_FOUND, "Personnage non trouvé");
     }
 
     // Attempt to find the character class associated with the character
@@ -207,12 +210,12 @@ const verifyBelonging = async (userId, characterId) => {
 
   // If the character is not found, throw an ApiError
   if (!character) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Character not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Personnage non trouvé");
   }
 
   // Check if the authenticated user owns the character, if not throw an ApiError
   if (userId !== character.id_user) {
-    throw new ApiError(httpStatus.FORBIDDEN, "Forbidden");
+    throw new ApiError(httpStatus.FORBIDDEN, "Non autorisé");
   }
 
   // If the character is found and the user owns it, the function completes successfully

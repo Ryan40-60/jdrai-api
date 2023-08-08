@@ -23,7 +23,10 @@ const getCharacterClass = async (characterClassId) => {
 
     // If the character class is not found, throw an ApiError
     if (!characterClass) {
-      throw new ApiError(httpStatus.NOT_FOUND, "Character class not found");
+      throw new ApiError(
+        httpStatus.NOT_FOUND,
+        "Classe de personnage non trouvé"
+      );
     }
 
     // Return the character class object

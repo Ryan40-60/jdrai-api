@@ -39,7 +39,7 @@ const getUserById = async (userId) => {
 
     // If the user is not found, throw an ApiError
     if (!user) {
-      throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+      throw new ApiError(httpStatus.NOT_FOUND, "Utilisateur non trouvé");
     }
 
     return [user, null];
