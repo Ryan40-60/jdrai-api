@@ -15,6 +15,7 @@ const Character = sequelize.define(
   {
     id: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
@@ -22,6 +23,22 @@ const Character = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
       trim: true,
+    },
+    strength: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    agility: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    charisma: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    luck: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   },
   {

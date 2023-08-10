@@ -191,7 +191,7 @@ export const deleteAuthenticatedUser = catchAsync(async (req, res) => {
   await tokenService.deleteRefreshToken(userId);
 
   // Send a response indicating success
-  res.send({ message: "User deleted successfully" });
+  res.send({ message: "Compte supprimé avec succès" });
 });
 
 /**
@@ -219,5 +219,5 @@ export const deleteUser = catchAsync(async (req, res) => {
   await tokenService.deleteRefreshToken(userId);
 
   // Send a response indicating success
-  res.send({ message: "User deleted successfully" });
+  res.send({ message: "Utilisateur supprimé avec succès" });
 });

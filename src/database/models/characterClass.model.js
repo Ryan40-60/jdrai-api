@@ -18,22 +18,6 @@ const CharacterClass = sequelize.define("character_classes", {
     allowNull: false,
     trim: true,
   },
-  strength: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  agility: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  charisma: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  luck: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
 });
 
 export default CharacterClass;

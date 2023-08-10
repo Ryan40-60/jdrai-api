@@ -74,13 +74,19 @@ const login = async (usernameOrEmail, password) => {
 
     // If user still not found, throw an error
     if (!user) {
-      throw new ApiError(httpStatus.NOT_FOUND, "Utilisateur non trouvé");
+      throw new ApiError(
+        httpStatus.NOT_FOUND,
+        "Informations de connexion incorrectes"
+      );
     }
 
     // If provided password doesn't match the user's actual password, throw an error
     const isPasswordCorrect = await user.validatePassword(password);
     if (!isPasswordCorrect) {
-      throw new ApiError(httpStatus.UNAUTHORIZED, "Mot de passe incorrect");
+      throw new ApiError(
+        httpStatus.UNAUTHORIZED,
+        "Informations de connexion incorrectes"
+      );
     }
 
     return [user, null];

@@ -11,6 +11,10 @@ const createCharacter = {
   body: Joi.object().keys({
     characterClassId: Joi.number().integer().required(),
     name: Joi.string().required(),
+    strength: Joi.number().integer().required(),
+    agility: Joi.number().integer().required(),
+    charisma: Joi.number().integer().required(),
+    luck: Joi.number().integer().required(),
   }),
 };
 
@@ -33,6 +37,10 @@ const updateCharacter = {
   body: Joi.object().keys({
     characterClassId: Joi.number().integer().required(),
     name: Joi.string().required(),
+    strength: Joi.number().integer().required(),
+    agility: Joi.number().integer().required(),
+    charisma: Joi.number().integer().required(),
+    luck: Joi.number().integer().required(),
   }),
 };
 

@@ -6,6 +6,7 @@ module.exports = {
     await queryInterface.createTable("characters", {
       id: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true,
       },
@@ -29,6 +30,22 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         trim: true,
+      },
+      strength: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      agility: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      charisma: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      luck: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       createdAt: {
         type: Sequelize.DATE,

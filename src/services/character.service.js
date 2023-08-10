@@ -17,12 +17,24 @@ import CharacterClass from "../database/models/characterClass.model.js";
  *                                                      The character will be null if there was an error creating the character.
  *                                                      The error will be null if the operation was successful.
  */
-const createCharacter = async (userId, characterClassId, name) => {
+const createCharacter = async (
+  userId,
+  characterClassId,
+  name,
+  strength,
+  agility,
+  charisma,
+  luck
+) => {
   // Prepare the data for creating a character
   const data = {
     id_user: userId,
     id_characterClass: characterClassId,
     name: name,
+    strength: strength,
+    agility: agility,
+    charisma: charisma,
+    luck: luck,
   };
 
   try {
@@ -139,11 +151,24 @@ const listCharacters = async (userId) => {
  *                                                      The character will be null if there was an error updating the character.
  *                                                      The error will be null if the operation was successful.
  */
-const updateCharacter = async (userId, characterId, characterClassId, name) => {
+const updateCharacter = async (
+  userId,
+  characterId,
+  characterClassId,
+  name,
+  strength,
+  agility,
+  charisma,
+  luck
+) => {
   // Prepare the data for updating a character
   const data = {
     id_characterClass: characterClassId,
     name: name,
+    strength: strength,
+    agility: agility,
+    charisma: charisma,
+    luck: luck,
   };
 
   try {

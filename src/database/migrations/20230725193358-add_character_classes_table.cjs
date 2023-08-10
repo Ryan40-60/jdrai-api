@@ -14,22 +14,6 @@ module.exports = {
         allowNull: false,
         trim: true,
       },
-      strength: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      agility: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      charisma: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      luck: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
     });
   },
 

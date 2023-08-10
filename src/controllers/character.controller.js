@@ -10,14 +10,19 @@ import characterService from "../services/character.service.js";
  */
 export const createCharacter = catchAsync(async (req, res) => {
   // Extract the necessary data from the request
-  const { characterClassId, name } = req.body;
+  const { characterClassId, name, strength, agility, charisma, luck } =
+    req.body;
   const { id: userId } = req.user;
 
   // Attempt to create a character attached to the authenticated user
   const [character, characterError] = await characterService.createCharacter(
     userId,
     characterClassId,
-    name
+    name,
+    strength,
+    agility,
+    charisma,
+    luck
   );
 
   // If there was an error during create, throw the error
@@ -85,7 +90,8 @@ export const getCharacter = catchAsync(async (req, res) => {
  */
 export const updateCharacter = catchAsync(async (req, res) => {
   // Extract the necessary data from the request
-  const { characterClassId, name } = req.body;
+  const { characterClassId, name, strength, agility, charisma, luck } =
+    req.body;
   const { id: characterId } = req.params;
   const { id: userId } = req.user;
 
@@ -95,7 +101,11 @@ export const updateCharacter = catchAsync(async (req, res) => {
       userId,
       characterId,
       characterClassId,
-      name
+      name,
+      strength,
+      agility,
+      charisma,
+      luck
     );
 
   // If there was an error during update, throw the error
@@ -122,5 +132,5 @@ export const deleteCharacter = catchAsync(async (req, res) => {
   await characterService.deleteCharacter(userId, characterId);
 
   // Send a response indicating success
-  res.send({ message: "Character deleted successfully" });
+  res.send({ message: "Personnage supprimé avec succès" });
 });

@@ -69,7 +69,7 @@ export const login = catchAsync(async (req, res) => {
   if (!usernameOrEmail || !password) {
     throw new ApiError(
       httpStatus.BAD_REQUEST,
-      "Information de connexion manquante"
+      "Information(s) de connexion manquante(s)"
     );
   }
 
@@ -108,7 +108,7 @@ export const logout = catchAsync(async (req, res) => {
   await dbService.destroy(Token, { id_user: userId });
 
   // Send a response indicating successful logout
-  res.send({ message: "Logout successful" });
+  res.send({ message: "Déconnexion réussie" });
 });
 
 /**
